@@ -1,0 +1,90 @@
+#include "sunday_system\dialogs\defines.hpp"
+#include "sunday_system\dialogs\dialogs.hpp"
+
+enableDebugConsole = 1;
+
+corpseManagerMode = 1;
+corpseLimit = 1;
+corpseRemovalMinTime = 900;
+corpseRemovalMaxTime = 3600;
+
+respawn = 3;
+respawnButton = 1;
+respawnDelay = 45;
+respawnDialog = 0;
+respawnOnStart = 0;
+respawnTemplates[] = {"MenuPosition", "Tickets", "Spectator", "EndMission"};
+
+class Params
+{
+	class Respawn
+	{
+		title = "Respawn";
+		values[] = {0,1,2,3};
+		texts[] = {"20 Seconds", "45 Seconds", "90 Seconds", "Disabled"};
+		default = 1;               
+	};		
+	class RespawnPositions
+	{
+		title = "Respawn Positions";
+		values[] = {0,1,2};
+		texts[] = {"Both", "Starting location only", "Team only"};
+		default = 0;               
+	};
+};
+
+class CfgCommunicationMenu
+{   
+	class heliExtract
+    {
+        text = "Request extraction"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "[_pos] execVM 'sunday_system\heliExtract.sqf'"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+	class extractLeave
+    {
+        text = "Extract"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "extractLeave = true; publicVariable 'extractLeave'"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = ""; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };	
+};
+
+class CfgDebriefing
+{  
+	class DROEnd_Full
+	{
+		title = "Mission Completed";
+		subtitle = "";
+		description = "The recon operation is complete success, all objectives accomplished. Good work.";
+		pictureBackground = "images\recon_image_notext.jpg";
+		picture = "";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+	class DROEnd_Partial
+	{
+		title = "Mission Completed";
+		subtitle = "";
+		description = "The recon operation is a partial success. Command will assign another team to pursue the remaining objectives.";
+		pictureBackground = "images\recon_image_notext.jpg";
+		picture = "";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+	class DROEnd_Fail
+	{
+		title = "Mission Failed";
+		subtitle = "";
+		description = "We're considering this operation a failure. None of the objectives have been completed and your team has been commanded to stand down while a full debrief is prepared.";
+		pictureBackground = "images\recon_image_notext.jpg";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+	};
+};
+
